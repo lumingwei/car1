@@ -14,44 +14,25 @@ class BaseController extends Controller
         if(!IS_AJAX){
             //生成菜单html
             $menu_arr = array(
-                '经纪机构管理' =>array(
+                '自主查询' =>array(
                     'list' =>array(
-                        '列表查询'=>array('code'=>'company_list','href'=>U("index/company_list")),
-                        '新增'    =>array('code'=>'add_company','href'=>U("index/add_company")),
+                        '从车查询'=>array('code'=>array('search_car'),'href'=>U("index/search_car")),
+                        '从人查询'=>array('code'=>array('search_people'),'href'=>U("index/search_people")),
+                        '从修理机构查询'=>array('code'=>array('search_company'),'href'=>U("index/search_company")),
+                        '从手机号查询'=>array('code'=>array('search_phone'),'href'=>U("index/search_phone")),
                     ),
-                    'code'=>array('company_list','add_company')
+                    'code'=>array('search_car','search_people','search_company','search_phone')
                 ),
-                '机构用户管理' =>array(
+                '风险库查询' =>array(
                     'list' =>array(
-                        '用户列表'=>array('code'=>'company_user_list','href'=>U("index/company_user_list")),
-                        '新增用户'=>array('code'=>'add_company_user','href'=>U("index/add_company_user")),
+                        '刑事案件'=>array('code'=>array('criminal_case','add_criminal_case'),'href'=>U("index/criminal_case")),
+                        '风险车辆'=>array('code'=>array('risk_car','add_risk_car'),'href'=>U("index/risk_car")),
+                        '风险人员'=>array('code'=>array('risk_people','add_risk_people'),'href'=>U("index/risk_people")),
+                        '风险机构'=>array('code'=>array('risk_company','add_risk_company'),'href'=>U("index/risk_company")),
+                        '风险手机号'=>array('code'=>array('risk_phone','add_risk_phone'),'href'=>U("index/risk_phone")),
                     ),
-                    'code'=>array('company_user_list','add_company_user')
-                ),
-                '存量房管理' =>array(
-                    'list' =>array(
-                        '列表查询'=>array('code'=>'room_list','href'=>U("index/room_list")),
-                        '新增'    =>array('code'=>'add_room','href'=>U("index/add_room")),
-                    ),
-                    'code'=>array('room_list','add_room')
-                ),
-                '存量房合同管理' =>array(
-                    'list' =>array(
-                        '存量房合同签订'    =>array('code'=>'add_contract','href'=>U("index/add_contract")),
-                        '存量房合同查询'    =>array('code'=>'contract_list','href'=>U("index/contract_list")),
-                        //'待审核合同查询'    =>array('code'=>'uncheck_contract_list','href'=>U("index/uncheck_contract_list")),
-                        //'已归档合同查询'    =>array('code'=>'checked_contract_list','href'=>U("index/checked_contract_list")),
-                        //'已注销合同查询'    =>array('code'=>'cancel_contract_list','href'=>U("index/cancel_contract_list")),
-                    ),
-                    'code'=>array('look_sign_contract','sign_contract','add_contract','contract_list','uncheck_contract_list','checked_contract_list','cancel_contract_list')
-                ),
-                '存量房数据统计分析' =>array(
-                    'list' =>array(
-                        '条件汇总'    =>array('code'=>'room_condition_count_list','href'=>U("index/room_condition_count_list")),
-                        '分类汇总'    =>array('code'=>'room_cat_count_list','href'=>U("index/room_cat_count_list")),
-                    ),
-                    'code'=>array('room_condition_count_list','room_cat_count_list')
-                ),
+                    'code'=>array('add_risk_phone','add_risk_company','add_risk_people','add_risk_car','add_criminal_case','criminal_case','risk_car','risk_people','risk_company','risk_phone')
+                )
             );
             $act_name = strtolower(ACTION_NAME);
             $menu_html = '';
@@ -69,7 +50,8 @@ class BaseController extends Controller
                     }
                     if(!empty($v['list'])){
                        foreach($v['list'] as $kk=>$vv){
-                           if($vv['code'] == $act_name){
+                           //if($vv['code'] == $act_name){
+                           if(in_array($act_name,$vv['code'])){
                                $this->assign('position_2',$kk);
                                $menu_html .= '<a href="'.$vv['href'].'" style="color:red;">'.$kk.'</a>';
                            }else{
