@@ -363,6 +363,7 @@ class IndexController extends BaseController {
         }
         $this->display(); // 输出模板
     }
+    
 
     //删除
     public function del_risk_book(){
