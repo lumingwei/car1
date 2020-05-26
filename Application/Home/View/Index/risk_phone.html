@@ -37,7 +37,7 @@
                 <tbody align="center">
                 <volist name="list" id="vo" key="k" >
                     <tr>
-                        <td>{$vo.pin_code}</td>
+                        <td><a href="{:U('index/look_case')}&pin_code={$vo.pin_code}">{$vo.pin_code}</a></td>
                         <td>{$vo.name}</td>
                         <td>{$vo.phone}</td>
                         <td>{$vo.risk_report}</td>
