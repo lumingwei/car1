@@ -5,24 +5,20 @@ class IndexController extends BaseController {
 
     //后台首页
     public function index(){
-        $this->redirect('index/company_list');
+        $this->redirect('index/search_car');
     }
 
     public function search_car(){
-        $postArr['name'] = I('name','','trim');
-        $postArr['code'] = I('code','','trim');
-        $postArr['boss'] = I('boss','','trim');
+        $postArr['license_number'] = I('license_number','','trim');
+        $postArr['chassis_number'] = I('chassis_number','','trim');
         $where = array();
-        if(!empty($postArr['name'])){
-            $where['name']  = array('like', "%{$postArr['name']}%");
+        if(!empty($postArr['license_number'])){
+            $where['license_number']  = array('like', "%{$postArr['license_number']}%");
         }
-        if(!empty($postArr['code'])){
-            $where['code']  = array('like', "%{$postArr['code']}%");
+        if(!empty($postArr['chassis_number'])){
+            $where['chassis_number']  = array('like', "%{$postArr['chassis_number']}%");
         }
-        if(!empty($postArr['boss'])){
-            $where['boss']  = array('like', "%{$postArr['boss']}%");
-        }
-        $company    = M('company'); // 实例化User对象
+        $company    = M('case'); // 实例化User对象
         $count      = $company->where($where)->count();// 查询满足要求的总记录数
         $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
        //分页跳转的时候保证查询条件
@@ -32,6 +28,96 @@ class IndexController extends BaseController {
         $show       = $Page->show();// 分页显示输出
 // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        if(!empty($list)){
+            foreach ($list as $k=>$v){
+                $list[$k]['status'] = $v['status'] == 1?'已完结':'未完结';
+            }
+        }
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    public function search_people(){
+        $postArr['car_owner'] = I('car_owner','','trim');
+        $postArr['id_card'] = I('id_card','','trim');
+        $where = array();
+        if(!empty($postArr['car_owner'])){
+            $where['car_owner']  = array('like', "%{$postArr['car_owner']}%");
+        }
+        if(!empty($postArr['id_card'])){
+            $where['id_card']  = array('like', "%{$postArr['id_card']}%");
+        }
+        $company    = M('case'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        if(!empty($list)){
+            foreach ($list as $k=>$v){
+                $list[$k]['status'] = $v['status'] == 1?'已完结':'未完结';
+            }
+        }
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    public function search_company(){
+        $postArr['company_name'] = I('company_name','','trim');
+        $where = array();
+        if(!empty($postArr['company_name'])){
+            $where['company_name']  = array('like', "%{$postArr['company_name']}%");
+        }
+        $company    = M('case'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        if(!empty($list)){
+            foreach ($list as $k=>$v){
+                $list[$k]['status'] = $v['status'] == 1?'已完结':'未完结';
+            }
+        }
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    public function search_phone(){
+        $postArr['car_owner_phone'] = I('car_owner_phone','','trim');
+        $where = array();
+        if(!empty($postArr['car_owner_phone'])){
+            $where['car_owner_phone']  = array('like', "%{$postArr['car_owner_phone']}%");
+        }
+        $company    = M('case'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        if(!empty($list)){
+            foreach ($list as $k=>$v){
+                $list[$k]['status'] = $v['status'] == 1?'已完结':'未完结';
+            }
+        }
         $this->assign('postArr',$postArr);// 搜索参数
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -39,14 +125,95 @@ class IndexController extends BaseController {
     }
 
 
+    //新增/编辑案件
+    public function add_case(){
+        $id         = I('id',0,'intval');
+        $pin_code   = I('pin_code','','trim');
+        $from       = I('from','search_car','trim');
+        if(!empty($id)){
+            $info = M('case')->where(array('id'=>$id))->find();
+        }
+        if(!empty($pin_code)){
+            $info = M('case')->where(array('pin_code'=>$pin_code))->find();
+        }
+        if(IS_AJAX){
+            $company    = M('case');
+            $data       = $company->create(); // 把无用的都顾虑掉了
+            $data['danger_time'] = !empty($data['danger_time'])?strtotime($data['danger_time']):0;
+            if($id){
+                $ret        = $company->where(array('id'=>$id))->save($data);
+            }else{
+                $ret        = $company->add($data);
+            }
+            if($ret){
+                $this->success('操作成功', U('index/'.$from));
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            !empty($info) && $info['danger_time'] = !empty($info['danger_time'])?date('Y-m-d',$info['danger_time']):'';
+            $this->assign('info',!empty($info)?$info:array());
+        }
+        $this->display(); // 输出模板
+    }
+
+    //新增/编辑案件
+    public function look_case(){
+        $id         = I('id',0,'intval');
+        $pin_code   = I('pin_code','','trim');
+        $from       = I('from','search_car','trim');
+        if(!empty($id)){
+            $info = M('case')->where(array('id'=>$id))->find();
+        }
+        if(!empty($pin_code)){
+            $info = M('case')->where(array('pin_code'=>$pin_code))->find();
+        }
+        if(IS_AJAX){
+            $company    = M('case');
+            $data       = $company->create(); // 把无用的都顾虑掉了
+            $data['danger_time'] = !empty($data['danger_time'])?strtotime($data['danger_time']):0;
+            if($id){
+                $ret        = $company->where(array('id'=>$id))->save($data);
+            }else{
+                $ret        = $company->add($data);
+            }
+            if($ret){
+                $this->success('操作成功', U('index/'.$from));
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            !empty($info) && $info['danger_time'] = !empty($info['danger_time'])?date('Y-m-d',$info['danger_time']):'';
+            $this->assign('info',!empty($info)?$info:array());
+        }
+        $this->display(); // 输出模板
+    }
+
+    //删除案件
+    public function del_case(){
+        $id   = I('id',0,'intval');
+        $from = I('from','search_car','trim');
+        if(empty($id)){
+            $this->error('非法参数', U('index/'.$from));
+        }
+        $company    = M('case');
+        $ret        = $company->where(array('id'=>$id))->delete();
+        if($ret){
+            $this->success('操作成功', U('index/'.$from));
+        }else{
+            $this->error('操作失败', U('index/'.$from));
+        }
+    }
+
+
     public function criminal_case(){
-        $postArr['company_id']           = I('company_id',0,'intval');
         $postArr['fraud_type']           = I('fraud_type',0,'intval');
+        $postArr['company_name']         = I('company_name','','trim');
         $postArr['name']                  = I('name','','trim');
         $postArr['id_card']               = I('id_card','','trim');
         $where = array();
-        if(!empty($postArr['company_id'])){
-            $where['company_id']  = $postArr['company_id'];
+        if(!empty($postArr['company_name'])){
+            $where['company_name']  = array('like', "%{$postArr['company_name']}%");
         }
         if(!empty($postArr['fraud_type'])){
             $where['fraud_type']  = $postArr['fraud_type'];
@@ -68,13 +235,12 @@ class IndexController extends BaseController {
 // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
         $fraud_type_list   = M('fraud_type')->select();
-        $company_list      = M('company')->select();
+        $company_list      = M('risk_company')->select();
         $company_list      = $this->tranKeyArray($company_list,'id');
         $fraud_type_list   = $this->tranKeyArray($fraud_type_list,'id');
         if(!empty($list)){
             foreach ($list as $k=>$v){
                 $list[$k]['fraud_type_name'] = !empty($fraud_type_list[$v['fraud_type']]['name'])?$fraud_type_list[$v['fraud_type']]['name']:'';
-                $list[$k]['company_name']    = !empty($company_list[$v['company_id']]['name'])?$company_list[$v['company_id']]['name']:'';
             }
         }
         $company_html    = $this->getCompanyHtml($postArr['company_id']);
@@ -252,7 +418,7 @@ class IndexController extends BaseController {
 
     private function getCompanyHtml($select_id = 0){
         $select_id = !empty($select_id)?intval($select_id):0;
-        $list   = M('company')->select();
+        $list   = M('risk_company')->select();
         $html   = '<select  name="company_id">';
         $html  .= '<option value="0">请选择</option>';
         if(!empty($list)){
@@ -377,6 +543,240 @@ class IndexController extends BaseController {
             $this->success('操作成功', U('index/risk_book'));
         }else{
             $this->error('操作失败', U('index/risk_book'));
+        }
+    }
+
+
+ /*
+ * 风险人员
+ * risk_people
+ */
+    //列表
+    public function risk_people(){
+        $postArr['name']        = I('name','','trim');
+        $postArr['id_card']   = I('id_card','','trim');
+        $postArr['phone']      = I('phone','','trim');
+        $postArr['driving_licence']      = I('driving_licence','','trim');
+        $where = array();
+        if(!empty($postArr['name'])){
+            $where['name']  = array('like', "%{$postArr['name']}%");
+        }
+        if(!empty($postArr['id_card'])){
+            $where['id_card']  = array('like', "%{$postArr['id_card']}%");
+        }
+        if(!empty($postArr['phone'])){
+            $where['phone']  = array('like', "%{$postArr['phone']}%");
+        }
+        if(!empty($postArr['driving_licence'])){
+            $where['driving_licence']  = array('like', "%{$postArr['driving_licence']}%");
+        }
+        $company    = M('risk_people'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+        // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    //新增
+    public function add_risk_people(){
+        $id       = I('id',0,'intval');
+        if(!empty($id)){
+            $info = M('risk_people')->where(array('id'=>$id))->find();
+        }
+        if(IS_AJAX){
+            $user               = M('risk_people');
+            $data               = $user->create(); // 把无用的都顾虑掉了
+            if($id){
+                $ret        = $user->where(array('id'=>$id))->save($data);
+            }else{
+                $ret        = $user->add($data);
+            }
+            if($ret){
+                $this->success('操作成功', U('index/risk_people'));
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            $this->assign('info',!empty($info)?$info:array());
+        }
+        $this->display(); // 输出模板
+    }
+
+
+    //删除
+    public function del_risk_people(){
+        $id = I('id',0,'intval');
+        if(empty($id)){
+            $this->error('非法参数', U('index/risk_people'));
+        }
+        $company    = M('risk_people');
+        $ret        = $company->where(array('id'=>$id))->delete();
+        if($ret){
+            $this->success('操作成功', U('index/risk_people'));
+        }else{
+            $this->error('操作失败', U('index/risk_people'));
+        }
+    }
+
+
+/*
+* 风险机构
+* risk_company
+*/
+    //列表
+    public function risk_company(){
+        $postArr['name']        = I('name','','trim');
+        $postArr['id_card']   = I('id_card','','trim');
+        $postArr['phone']      = I('phone','','trim');
+        $postArr['driving_licence']      = I('driving_licence','','trim');
+        $where = array();
+        if(!empty($postArr['name'])){
+            $where['name']  = array('like', "%{$postArr['name']}%");
+        }
+        if(!empty($postArr['id_card'])){
+            $where['id_card']  = array('like', "%{$postArr['id_card']}%");
+        }
+        if(!empty($postArr['phone'])){
+            $where['phone']  = array('like', "%{$postArr['phone']}%");
+        }
+        if(!empty($postArr['driving_licence'])){
+            $where['driving_licence']  = array('like', "%{$postArr['driving_licence']}%");
+        }
+        $company    = M('risk_company'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+        // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    //新增
+    public function add_risk_company(){
+        $id       = I('id',0,'intval');
+        if(!empty($id)){
+            $info = M('risk_company')->where(array('id'=>$id))->find();
+        }
+        if(IS_AJAX){
+            $user               = M('risk_company');
+            $data               = $user->create(); // 把无用的都顾虑掉了
+            if($id){
+                $ret        = $user->where(array('id'=>$id))->save($data);
+            }else{
+                $ret        = $user->add($data);
+            }
+            if($ret){
+                $this->success('操作成功', U('index/risk_company'));
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            $this->assign('info',!empty($info)?$info:array());
+        }
+        $this->display(); // 输出模板
+    }
+
+
+    //删除
+    public function del_risk_company(){
+        $id = I('id',0,'intval');
+        if(empty($id)){
+            $this->error('非法参数', U('index/risk_company'));
+        }
+        $company    = M('risk_company');
+        $ret        = $company->where(array('id'=>$id))->delete();
+        if($ret){
+            $this->success('操作成功', U('index/risk_company'));
+        }else{
+            $this->error('操作失败', U('index/risk_company'));
+        }
+    }
+
+/*
+* 风险手机号
+* risk_phone
+*/
+    //列表
+    public function risk_phone(){
+        $postArr['name']        = I('name','','trim');
+        $postArr['phone']       = I('phone','','trim');
+        $where = array();
+        if(!empty($postArr['name'])){
+            $where['name']  = array('like', "%{$postArr['name']}%");
+        }
+        if(!empty($postArr['phone'])){
+            $where['phone']  = array('like', "%{$postArr['phone']}%");
+        }
+        $company    = M('risk_phone'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+        // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    //新增
+    public function add_risk_phone(){
+        $id       = I('id',0,'intval');
+        if(!empty($id)){
+            $info = M('risk_phone')->where(array('id'=>$id))->find();
+        }
+        if(IS_AJAX){
+            $user               = M('risk_phone');
+            $data               = $user->create(); // 把无用的都顾虑掉了
+            if($id){
+                $ret        = $user->where(array('id'=>$id))->save($data);
+            }else{
+                $ret        = $user->add($data);
+            }
+            if($ret){
+                $this->success('操作成功', U('index/risk_phone'));
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            $this->assign('info',!empty($info)?$info:array());
+        }
+        $this->display(); // 输出模板
+    }
+
+
+    //删除
+    public function del_risk_phone(){
+        $id = I('id',0,'intval');
+        if(empty($id)){
+            $this->error('非法参数', U('index/risk_phone'));
+        }
+        $company    = M('risk_phone');
+        $ret        = $company->where(array('id'=>$id))->delete();
+        if($ret){
+            $this->success('操作成功', U('index/risk_phone'));
+        }else{
+            $this->error('操作失败', U('index/risk_phone'));
         }
     }
 

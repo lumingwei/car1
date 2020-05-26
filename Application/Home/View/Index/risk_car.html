@@ -31,18 +31,20 @@
             <table class="table" width="100%">
                 <thead align="center">
                 <tr>
+                    <th width="10%">PIN码</th>
                     <th width="10%">车牌号码</th>
                     <th width="10%">牌号种类</th>
                     <th width="10%">车辆型号</th>
                     <th width="10%">车架编号</th>
                     <th width="10%">车辆风险类型</th>
-                    <th width="30%">车辆风险上报原因</th>
+                    <th width="20%">车辆风险上报原因</th>
                     <th width="20%">操作</th>
                 </tr>
                 </thead>
                 <tbody align="center">
                 <volist name="list" id="vo" key="k" >
                     <tr>
+                        <td>{$vo.pin_code}</td>
                         <td>{$vo.license_number}</td>
                         <td>{$vo.brand_type_name}</td>
                         <td>{$vo.vehicle_type}</td>

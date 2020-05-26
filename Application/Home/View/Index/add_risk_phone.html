@@ -18,12 +18,13 @@
         <div class="main" style="text-align: center;">
             <form id='editRealMsgForm' enctype="multipart/form-data" action="#"  method="post">
                 <input type="hidden" name="id" value="{$info['id']}">
-                <p>合同编号：<input type="text" name="number" value="{$info['number']}"> </p>
-                <p>合同备案号：<input type="text" name="record_number" value="{$info['record_number']}"> </p>
-                <p>关联房源id：<input type="text" name="room_id" placeholder="请填写房源id" value="{$info['room_id']}"></p>
-                <p>出卖方：<input type="text" name="seller"  value="{$info['seller']}"></p>
-                <p>买受方：<input type="text" name="buyer"  value="{$info['buyer']}"></p>
-                <p>成交总价：<input type="text" name="deal_price" placeholder="单位：元" value="{$info['deal_price']}"></p>
+                <p>PIN码：<input type="text" name="pin_code" value="{$info['pin_code']}"> </p>
+                <p>姓名：<input type="text" name="name" value="{$info['name']}"> </p>
+                <p>手机号：<input type="text" name="phone" value="{$info['phone']}"> </p>
+                <p>上报原因：</p>
+                <textarea  name="risk_report" rows="15" cols="65">{$info['risk_report']}</textarea>
+                <p>其他信息：</p>
+                <textarea  name="other_report" rows="15" cols="65">{$info['other_report']}</textarea>
                 <p><input type="submit" value="提交"></p>
             </form>
         </div>
@@ -39,7 +40,7 @@
 
             jQuery.ajax({
 
-                url:'{:U("index/add_contract")}',
+                url:'{:U("index/add_risk_phone")}',
 
                 data:$('#editRealMsgForm').serialize(),
 

@@ -20,8 +20,9 @@ class BaseController extends Controller
                         '从人查询'=>array('code'=>array('search_people'),'href'=>U("index/search_people")),
                         '从修理机构查询'=>array('code'=>array('search_company'),'href'=>U("index/search_company")),
                         '从手机号查询'=>array('code'=>array('search_phone'),'href'=>U("index/search_phone")),
+                        '录入保险案件'=>array('code'=>array('add_case'),'href'=>U("index/add_case")),
                     ),
-                    'code'=>array('search_car','search_people','search_company','search_phone')
+                    'code'=>array('add_case','del_case','search_car','search_people','search_company','search_phone')
                 ),
                 '风险库查询' =>array(
                     'list' =>array(

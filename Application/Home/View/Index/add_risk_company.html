@@ -18,17 +18,13 @@
         <div class="main" style="text-align: center;">
             <form id='editRealMsgForm' enctype="multipart/form-data" action="#"  method="post">
                 <input type="hidden" name="id" value="{$info['id']}">
-                <p>企业：
-                     {$company_html}
-                </p>
-                <p>用户名称：<input type="text" name="name" value="{$info['name']}"> </p>
-                <p>密码：<input type="text" name="pwd" value="{$info['pwd']}"></p>
-                <p>联系电话：<input type="text" name="phone" value="{$info['phone']}"></p>
-                <p>电子邮箱：<input type="text" name="email" value="{$info['email']}"></p>
-                <p>
-                <label>权限设置:</label>
-                    {$act_code_html}
-                </p>
+                <p>PIN码：<input type="text" name="pin_code" value="{$info['pin_code']}"> </p>
+                <p>机构名称：<input type="text" name="name" value="{$info['name']}"> </p>
+                <p>地址：<input type="text" name="address" value="{$info['address']}"> </p>
+                <p>机构法人：<input type="text" name="legal_person" value="{$info['legal_person']}"> </p>
+                <p>电话号：<input type="text" name="phone" value="{$info['phone']}"> </p>
+                <p>风险机构上报原因：</p>
+                <textarea  name="risk_report" rows="15" cols="65">{$info['risk_report']}</textarea>
                 <p><input type="submit" value="提交"></p>
             </form>
         </div>
@@ -44,7 +40,7 @@
 
             jQuery.ajax({
 
-                url:'{:U("index/add_company_user")}',
+                url:'{:U("index/add_risk_company")}',
 
                 data:$('#editRealMsgForm').serialize(),
 

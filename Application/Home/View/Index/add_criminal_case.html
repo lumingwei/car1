@@ -18,14 +18,16 @@
         <div class="main" style="text-align: center;">
             <form id='editRealMsgForm' enctype="multipart/form-data" action="#"  method="post">
                 <input type="hidden" name="id" value="{$info['id']}">
+                <p>PIN码：<input type="text" name="pin_code" value="{$info['pin_code']}"> </p>
                 <p>姓名：<input type="text" name="name" value="{$info['name']}"> </p>
                 <p>身份证号码：<input type="text" name="id_card" value="{$info['id_card']}"> </p>
+                <p>案件处理机构：<input type="text" name="company_name" value="{$info['company_name']}"> </p>
                 <p>欺诈金额：<input type="text" name="fraud_amount" placeholder="单位：元" value="{$info['fraud_amount']}"></p>
                 <p>定损报告：</p>
                 <textarea  name="fee_report" rows="15" cols="65">{$info['fee_report']}</textarea>
-                <p>案件处理机构：
+<!--                <p>案件处理机构：
                     {$company_html}
-                </p>
+                </p>-->
                 <p>
                     车险欺诈类型：
                     {$fraud_type_html}

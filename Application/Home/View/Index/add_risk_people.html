@@ -19,18 +19,19 @@
             <form id='editRealMsgForm' enctype="multipart/form-data" action="#"  method="post">
                 <input type="hidden" name="id" value="{$info['id']}">
                 <p>PIN码：<input type="text" name="pin_code" value="{$info['pin_code']}"> </p>
-                <p>车牌号码：<input type="text" name="license_number" value="{$info['license_number']}"> </p>
-                <p>车辆型号：<input type="text" name="vehicle_type" value="{$info['vehicle_type']}"> </p>
-                <p>车架编号：<input type="text" name="chassis_number" value="{$info['chassis_number']}"> </p>
-                <p>车辆风险上报原因：</p>
-                <textarea  name="risk_report" rows="15" cols="65">{$info['risk_report']}</textarea>
-                <p>牌号种类：
-                    {$brand_type_html}
-                </p>
+                <p>姓名：<input type="text" name="name" value="{$info['name']}"> </p>
+                <p>身份证号：<input type="text" name="id_card" value="{$info['id_card']}"> </p>
+                <p>手机号：<input type="text" name="phone" value="{$info['phone']}"> </p>
+                <p>驾驶证号：<input type="text" name="driving_licence" value="{$info['driving_licence']}"> </p>
                 <p>
-                    车辆风险类型：
-                    {$fraud_type_html}
+                    性别：
+                    <select  name="sex">
+                        <option value="男" <if condition="$info['sex'] == '男'">selected</if>>男</option>
+                        <option value="女" <if condition="$info['sex'] == '女'">selected</if>>女</option>
+                    </select>
                 </p>
+                <p>风险人员上报原因：</p>
+                <textarea  name="risk_report" rows="15" cols="65">{$info['risk_report']}</textarea>
                 <p><input type="submit" value="提交"></p>
             </form>
         </div>
@@ -46,7 +47,7 @@
 
             jQuery.ajax({
 
-                url:'{:U("index/add_risk_car")}',
+                url:'{:U("index/add_risk_people")}',
 
                 data:$('#editRealMsgForm').serialize(),
 
