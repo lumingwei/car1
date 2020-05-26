@@ -30,9 +30,16 @@ class BaseController extends Controller
                         '风险人员'=>array('code'=>array('risk_people','add_risk_people'),'href'=>U("index/risk_people")),
                         '风险机构'=>array('code'=>array('risk_company','add_risk_company'),'href'=>U("index/risk_company")),
                         '风险手机号'=>array('code'=>array('risk_phone','add_risk_phone'),'href'=>U("index/risk_phone")),
+                        '通讯录'=>array('code'=>array('risk_book','add_risk_book'),'href'=>U("index/risk_book")),
                     ),
-                    'code'=>array('add_risk_phone','add_risk_company','add_risk_people','add_risk_car','add_criminal_case','criminal_case','risk_car','risk_people','risk_company','risk_phone')
-                )
+                    'code'=>array('risk_book','add_risk_book','add_risk_phone','add_risk_company','add_risk_people','add_risk_car','add_criminal_case','criminal_case','risk_car','risk_people','risk_company','risk_phone')
+                ),
+                '通讯录查询' =>array(
+                    'list' =>array(
+                        '通讯录'=>array('code'=>array('risk_book','add_risk_book'),'href'=>U("index/risk_book")),
+                    ),
+                    'code'=>array('risk_book','add_risk_book')
+                ),
             );
             $act_name = strtolower(ACTION_NAME);
             $menu_html = '';
