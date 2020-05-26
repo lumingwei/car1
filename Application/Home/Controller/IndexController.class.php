@@ -302,6 +302,83 @@ class IndexController extends BaseController {
         return $html;
     }
 
+
+
+    /*
+     * 通讯录模块
+     * risk_book
+     */
+    //列表
+    public function risk_book(){
+        $postArr['linkman']        = I('linkman','','trim');
+        $postArr['company_name']   = I('company_name','','trim');
+        $postArr['area_name']      = I('area_name','','trim');
+        $where = array();
+        if(!empty($postArr['linkman'])){
+            $where['linkman']  = array('like', "%{$postArr['linkman']}%");
+        }
+        if(!empty($postArr['company_name'])){
+            $where['company_name']  = array('like', "%{$postArr['company_name']}%");
+        }
+        if(!empty($postArr['area_name'])){
+            $where['area_name']  = array('like', "%{$postArr['area_name']}%");
+        }
+        $company    = M('risk_book'); // 实例化User对象
+        $count      = $company->where($where)->count();// 查询满足要求的总记录数
+        $Page       = $this->getPage($count,20);// 实例化分页类 传入总记录数和每页显示的记录数
+        //分页跳转的时候保证查询条件
+        foreach($postArr as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $show       = $Page->show();// 分页显示输出
+       // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+        $list = $company->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('postArr',$postArr);// 搜索参数
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+
+    //新增
+    public function add_risk_book(){
+        $id       = I('id',0,'intval');
+        if(!empty($id)){
+            $info = M('risk_book')->where(array('id'=>$id))->find();
+        }
+        if(IS_AJAX){
+            $user               = M('risk_book');
+            $data               = $user->create(); // 把无用的都顾虑掉了
+            if($id){
+                $ret        = $user->where(array('id'=>$id))->save($data);
+            }else{
+                $ret        = $user->add($data);
+            }
+            if($ret){
+                $this->success('操作成功', U('index/risk_book'));
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            $this->assign('info',!empty($info)?$info:array());
+        }
+        $this->display(); // 输出模板
+    }
+
+    //删除
+    public function del_risk_book(){
+        $id = I('id',0,'intval');
+        if(empty($id)){
+            $this->error('非法参数', U('index/risk_book'));
+        }
+        $company    = M('risk_book');
+        $ret        = $company->where(array('id'=>$id))->delete();
+        if($ret){
+            $this->success('操作成功', U('index/risk_book'));
+        }else{
+            $this->error('操作失败', U('index/risk_book'));
+        }
+    }
+
     //新增/编辑企业
     public function add_company(){
         $id = I('id',0,'intval');
