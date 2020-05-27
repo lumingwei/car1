@@ -18,6 +18,7 @@
         <div class="main" style="text-align: center;">
             <form id='editRealMsgForm' enctype="multipart/form-data" action="#"  method="post">
                 <input type="hidden" name="id" value="{$info['id']}">
+                <input type="hidden" name="from" value="{$from}">
                 <p>PIN码：<input type="text" name="pin_code" value="{$info['pin_code']}"> </p>
                 <p>保险理赔公司：<input type="text" name="company_name" value="{$info['company_name']}"> </p>
                 <p>发动机号：<input type="text" name="engine_number" value="{$info['engine_number']}"> </p>

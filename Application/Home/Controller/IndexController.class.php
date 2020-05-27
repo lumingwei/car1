@@ -153,6 +153,7 @@ class IndexController extends BaseController {
         }else{
             !empty($info) && $info['danger_time'] = !empty($info['danger_time'])?date('Y-m-d',$info['danger_time']):'';
             $this->assign('info',!empty($info)?$info:array());
+            $this->assign('from',$from);
         }
         $this->display(); // 输出模板
     }
